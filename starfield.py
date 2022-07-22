@@ -31,7 +31,6 @@ class Star:
     x: int = 0
     z: int = random.randint(1, WIDTH // 2)
     pz: int = z
-    ps: float = 0
 
     def draw(self, window: pygame.surface.Surface, color: Color) -> None:
             size: float = translate(self.z, (0, WIDTH), (8, 1))
