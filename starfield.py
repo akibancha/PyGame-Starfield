@@ -23,27 +23,28 @@ WIDTH, HEIGHT = WIN_RES
 
 FPS: int = 30
 
-STAR_AMOUNT:int = 500
+STAR_AMOUNT: int = 500
 
 @dataclass
 class Star:
     y: int = 0
     x: int = 0
-    z: int = random.randint(1, WIDTH)
+    z: int = random.randint(1, WIDTH // 2)
     pz: int = z
+    ps: float = 0
 
     def draw(self, window: pygame.surface.Surface, color: Color) -> None:
             size: float = translate(self.z, (0, WIDTH), (8, 1))
-            sx: float = translate(self.x / self.z, (0, 1), (0, WIDTH))
-            sy: float = translate(self.y / self.z, (0, 1), (0, HEIGHT))
-            px: float = translate(self.x / self.pz, (0, 1), (0, WIDTH))
-            py: float = translate(self.y / self.pz, (0, 1), (0, HEIGHT))
+            sx: float = translate(self.x / self.z, (0, 1), (0, WIDTH // 2))
+            sy: float = translate(self.y / self.z, (0, 1), (0, HEIGHT // 2))
+            px: float = translate(self.x / self.pz, (0, 1), (0, WIDTH // 2))
+            py: float = translate(self.y / self.pz, (0, 1), (0, HEIGHT // 2))
             pygame.draw.circle(window, color, (sx + WIDTH / 2, sy + HEIGHT / 2), size)
-            pygame.draw.line(window, color,(px + WIDTH / 2, py + HEIGHT / 2), (sx + WIDTH / 2, sy + HEIGHT / 2), int(size - size / 2))
+            pygame.draw.line(window, color,(px + WIDTH / 2, py + HEIGHT / 2), (sx + WIDTH / 2, sy + HEIGHT / 2), int(size))
 
     def renew(self) -> None:
-        self.x = random.randint(-WIDTH // 2, WIDTH)
-        self.y = random.randint(-HEIGHT // 2, HEIGHT)
+        self.x = random.randint(-WIDTH // 2, WIDTH // 2)
+        self.y = random.randint(-HEIGHT // 2, HEIGHT // 2)
         self.z = random.randint(1, WIDTH)
         self.pz = self.z
 
@@ -82,8 +83,8 @@ def main() -> None:
 
     stars: list[Star] = [
         Star(
-            y=random.randint(-HEIGHT //2, HEIGHT), 
-            x=random.randint(-WIDTH //2, WIDTH), 
+            y=random.randint(-HEIGHT // 2, HEIGHT // 2), 
+            x=random.randint(-WIDTH // 2, WIDTH // 2), 
             z=random.randint(1, WIDTH)
             )
         for _ in range(STAR_AMOUNT)
